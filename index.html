@@ -1,0 +1,479 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Samkelo Sabela: credit risk research on probability of default and IFRS 9 expected credit loss, plus analytics and reporting projects.">
+<title>Samkelo Sabela Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400;1,6..72,500&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: left-aligned ledger page. Hero carries the ECL identity as its signature detail; research leads, projects follow as case files. */
+:root{
+  --paper:#F3F6F5; --sheet:#FFFFFF; --ink:#13201D; --muted:#56655F; --rule:#D5DDDA;
+  --accent:#0D6655; --accent-soft:#E1EFEB; --amber:#9A6412; --amber-soft:#F6EBD8;
+  --display:"Newsreader", Georgia, "Times New Roman", serif;
+  --body:"Public Sans", "Segoe UI", Helvetica, Arial, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, Menlo, Consolas, monospace;
+  --s1:.75rem; --s2:.875rem; --s3:1rem; --s4:1.25rem; --s5:1.75rem; --s6:2.5rem; --s7:clamp(2.4rem,6vw,4.2rem);
+  --wrap:68rem;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#0E1513; --sheet:#151F1C; --ink:#E3ECE8; --muted:#97A8A2; --rule:#2A3733;
+  --accent:#5CC2A7; --accent-soft:#163A31; --amber:#E0A64C; --amber-soft:#3A2C14; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#0E1513; --sheet:#151F1C; --ink:#E3ECE8; --muted:#97A8A2; --rule:#2A3733;
+  --accent:#5CC2A7; --accent-soft:#163A31; --amber:#E0A64C; --amber-soft:#3A2C14; color-scheme:dark}
+
+*{box-sizing:border-box}
+body{margin:0}
+img{max-width:100%}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:var(--s3);line-height:1.6;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+a{color:var(--accent);text-underline-offset:3px}
+a:focus-visible,button:focus-visible{outline:2px solid var(--accent);outline-offset:3px;border-radius:2px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+h1,h2,h3{font-family:var(--display);font-weight:500;text-wrap:balance;margin:0;line-height:1.15}
+p{margin:0}
+.label{font-family:var(--mono);font-size:var(--s1);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+
+/* nav */
+header.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(8px);border-bottom:1px solid var(--rule)}
+header.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:var(--s3);padding-block:.7rem}
+.mark{font-family:var(--display);font-size:var(--s4);color:var(--ink);text-decoration:none;white-space:nowrap}
+.mark span{color:var(--accent);font-style:italic}
+nav.links{display:flex;gap:1.25rem;overflow-x:auto;min-width:0;scrollbar-width:none}
+nav.links::-webkit-scrollbar{display:none}
+nav.links a{color:var(--muted);text-decoration:none;font-size:var(--s2);white-space:nowrap;padding-block:.25rem}
+nav.links a:hover{color:var(--ink)}
+
+/* hero */
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:var(--s6);padding-block:clamp(2.5rem,7vw,5rem) var(--s6);align-items:end}
+.hero h1{font-size:var(--s7);letter-spacing:-.015em;margin-top:var(--s3)}
+.hero h1 em{color:var(--accent)}
+.hero .lede{margin-top:var(--s4);max-width:36rem;color:var(--muted);font-size:1.075rem}
+.hero .lede strong{color:var(--ink);font-weight:600}
+.cta{display:flex;flex-wrap:wrap;gap:.75rem;margin-top:var(--s5)}
+.btn{display:inline-flex;align-items:center;gap:.4rem;font:500 var(--s2)/1 var(--body);padding:.8rem 1.1rem;border-radius:3px;text-decoration:none;border:1px solid var(--ink);color:var(--ink);background:transparent;cursor:pointer}
+.btn.primary{background:var(--ink);color:var(--paper)}
+.btn:hover{border-color:var(--accent);color:var(--accent)}
+.btn.primary:hover{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+
+.ecl{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:var(--s5)}
+.ecl .formula{font-family:var(--display);font-size:clamp(1.6rem,3.6vw,2.2rem);margin:.6rem 0 var(--s4);white-space:nowrap}
+.ecl .formula b{font-weight:500;color:var(--accent)}
+.ecl svg{display:block;width:100%;height:auto}
+.ecl .cap{font-size:var(--s1);color:var(--muted);margin-top:.5rem}
+.ecl dl{display:grid;grid-template-columns:auto 1fr;gap:.3rem var(--s3);margin:var(--s4) 0 0;font-size:var(--s2)}
+.ecl dt{font-family:var(--mono);color:var(--accent)}
+.ecl dd{margin:0;color:var(--muted)}
+
+/* facts strip */
+.facts{border-block:1px solid var(--rule)}
+.facts .wrap{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));padding-block:0}
+.fact{padding:var(--s4) var(--s3) var(--s4) 0;display:grid;gap:.2rem;min-width:0}
+.fact+.fact{border-left:1px solid var(--rule);padding-left:var(--s3)}
+.fact b{font-family:var(--display);font-weight:500;font-size:var(--s5);line-height:1.1}
+.fact span{font-size:var(--s2);color:var(--muted)}
+
+/* sections */
+section.block{padding-block:clamp(3rem,7vw,5rem) 0}
+.head{display:grid;gap:.6rem;margin-bottom:var(--s6);max-width:44rem}
+.head h2{font-size:clamp(1.8rem,4vw,2.6rem)}
+.head p{color:var(--muted)}
+
+.about{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:var(--s6)}
+.about .prose{display:grid;gap:var(--s3);max-width:40rem}
+.about .prose p:first-child{font-family:var(--display);font-size:var(--s4);line-height:1.45}
+.aside{display:grid;gap:var(--s4);align-content:start}
+.aside h3{font-family:var(--mono);font-size:var(--s1);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);font-weight:500;margin-bottom:.5rem}
+.tags{display:flex;flex-wrap:wrap;gap:.4rem}
+.tag{font-family:var(--mono);font-size:.78rem;padding:.28rem .55rem;border:1px solid var(--rule);border-radius:2px;color:var(--ink);background:var(--sheet)}
+
+/* research feature */
+.feature{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;overflow:hidden}
+.feature-top{padding:var(--s5);display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:var(--s5);border-bottom:1px solid var(--rule)}
+.feature-top h3{font-size:clamp(1.5rem,3vw,2rem);margin-top:.6rem}
+.feature-top p.sum{margin-top:var(--s3);color:var(--muted);max-width:38rem}
+.status{display:inline-flex;align-items:center;gap:.45rem;font-family:var(--mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;padding:.3rem .6rem;border-radius:2px}
+.status::before{content:"";width:.5rem;height:.5rem;border-radius:50%;background:currentColor}
+.status.live{color:var(--amber);background:var(--amber-soft)}
+.status.done{color:var(--accent);background:var(--accent-soft)}
+.meta{display:grid;gap:.75rem;align-content:start;font-size:var(--s2)}
+.meta div{display:grid;gap:.1rem}
+.meta dt{font-family:var(--mono);font-size:.72rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted)}
+.meta dd{margin:0}
+
+.pipeline{padding:var(--s5);border-bottom:1px solid var(--rule)}
+.pipe-scroll{overflow-x:auto;margin-top:var(--s3)}
+.pipe{display:grid;grid-template-columns:repeat(6,minmax(9.5rem,1fr));gap:.5rem;min-width:60rem}
+.stage{border:1px solid var(--rule);border-radius:3px;padding:.85rem;display:grid;gap:.35rem;align-content:start;position:relative;background:var(--paper)}
+.stage:not(:last-child)::after{content:"→";position:absolute;right:-.62rem;top:50%;transform:translateY(-50%);color:var(--muted);font-size:.85rem;background:var(--sheet);line-height:1}
+.stage b{font-size:var(--s2);font-weight:600}
+.stage span{font-size:.8rem;color:var(--muted);line-height:1.45}
+.stage .n{font-family:var(--mono);font-size:.7rem;color:var(--accent)}
+
+.cols3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr))}
+.cols3>div{padding:var(--s5);display:grid;gap:.5rem;align-content:start}
+.cols3>div+div{border-left:1px solid var(--rule)}
+.cols3 h4{margin:0;font-family:var(--mono);font-size:var(--s1);font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.cols3 p,.cols3 li{font-size:var(--s2)}
+.cols3 ul{margin:0;padding-left:1.1rem;display:grid;gap:.35rem}
+.models{display:grid;gap:.6rem}
+.model{display:grid;grid-template-columns:auto 1fr;gap:.6rem;align-items:baseline;font-size:var(--s2)}
+.model b{font-family:var(--mono);font-weight:500;font-size:.78rem;color:var(--accent);min-width:2.3rem}
+.results{padding:var(--s4) var(--s5);background:var(--amber-soft);color:var(--ink);font-size:var(--s2);display:flex;gap:.75rem;align-items:baseline;flex-wrap:wrap}
+.results .label{color:var(--amber)}
+
+/* projects */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s4)}
+.case{background:var(--sheet);border:1px solid var(--rule);border-radius:4px;padding:var(--s5);display:grid;gap:var(--s3);align-content:start;min-width:0}
+.case-top{display:flex;justify-content:space-between;align-items:center;gap:.75rem;flex-wrap:wrap}
+.case h3{font-size:1.45rem}
+.case .row{display:grid;gap:.25rem}
+.case .row h4{margin:0;font-family:var(--mono);font-size:.72rem;font-weight:500;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.case .row p,.case .row li{font-size:var(--s2)}
+.case ul{margin:0;padding-left:1.1rem;display:grid;gap:.3rem}
+.case .tags{margin-top:.25rem}
+
+/* experience + education */
+.two{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s6)}
+.ledger{list-style:none;margin:0;padding:0;border-top:1px solid var(--ink)}
+.ledger li{display:grid;grid-template-columns:6.5rem minmax(0,1fr);gap:var(--s3);padding:var(--s4) 0;border-bottom:1px solid var(--rule)}
+.ledger .when{font-family:var(--mono);font-size:.78rem;color:var(--muted);padding-top:.2rem;font-variant-numeric:tabular-nums}
+.ledger b{display:block;font-weight:600}
+.ledger .org{color:var(--muted);font-size:var(--s2)}
+.ledger p{font-size:var(--s2);margin-top:.4rem}
+.col-title{font-family:var(--mono);font-size:var(--s1);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem;font-weight:500}
+
+/* notes */
+.notes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;border-top:1px solid var(--ink)}
+.note{padding:var(--s4) var(--s4) var(--s4) 0;display:grid;gap:.4rem;align-content:start}
+.note+.note{padding-left:var(--s4);border-left:1px solid var(--rule)}
+.note h3{font-size:1.15rem}
+.note p{font-size:var(--s2);color:var(--muted)}
+
+/* contact */
+.contact{margin-top:clamp(3rem,7vw,5rem);background:var(--ink);color:var(--paper)}
+.contact .wrap{padding-block:clamp(2.5rem,6vw,4rem);display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:var(--s6);align-items:end}
+.contact h2{font-size:clamp(2rem,4.5vw,3rem)}
+.contact p{color:color-mix(in srgb,var(--paper) 72%,var(--ink));margin-top:var(--s3);max-width:34rem}
+.contact .label{color:color-mix(in srgb,var(--paper) 60%,var(--ink))}
+.channels{display:grid;gap:.6rem}
+.channel{display:flex;justify-content:space-between;align-items:center;gap:.75rem;padding:.8rem 0;border-bottom:1px solid color-mix(in srgb,var(--paper) 22%,var(--ink));min-width:0}
+.channel span{font-family:var(--mono);font-size:var(--s2);overflow-wrap:anywhere;user-select:all}
+.channel a{color:var(--paper);font-family:var(--mono);font-size:var(--s2)}
+.copy{font:500 .75rem/1 var(--mono);background:transparent;color:var(--paper);border:1px solid color-mix(in srgb,var(--paper) 40%,var(--ink));padding:.45rem .65rem;border-radius:2px;cursor:pointer;flex-shrink:0}
+.copy:hover{border-color:var(--paper)}
+footer{background:var(--ink);color:color-mix(in srgb,var(--paper) 55%,var(--ink));font-size:var(--s1);font-family:var(--mono)}
+footer .wrap{padding-block:1.25rem;border-top:1px solid color-mix(in srgb,var(--paper) 15%,var(--ink));display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap}
+
+@media (max-width:860px){
+  .hero .wrap,.about,.feature-top,.two,.contact .wrap{grid-template-columns:minmax(0,1fr)}
+  .grid{grid-template-columns:minmax(0,1fr)}
+  .cols3,.notes{grid-template-columns:minmax(0,1fr)}
+  .cols3>div+div{border-left:0;border-top:1px solid var(--rule)}
+  .note+.note{border-left:0;padding-left:0;border-top:1px solid var(--rule)}
+  .facts .wrap{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fact:nth-child(3){border-left:0;padding-left:0}
+  .fact:nth-child(n+3){border-top:1px solid var(--rule)}
+}
+@media (max-width:520px){
+  nav.links a:nth-child(n+4){display:none}
+  .ledger li{grid-template-columns:minmax(0,1fr);gap:.25rem}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <a class="mark" href="#home">S<span>.</span> Sabela</a>
+    <nav class="links" aria-label="Sections">
+      <a href="#research">Research</a>
+      <a href="#projects">Projects</a>
+      <a href="#about">About</a>
+      <a href="#experience">Experience</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main id="home">
+  <section class="hero">
+    <div class="wrap">
+      <div>
+        <p class="label">Credit risk research · Reporting analytics · Johannesburg</p>
+        <h1>Estimating default, <em>explaining</em> the estimate.</h1>
+        <p class="lede">I'm <strong>Samkelo Sabela</strong>, a reporting specialist with an accounting and audit background, now researching probability-of-default modelling under IFRS 9 and Basel III. I build models and reports that a credit committee can read and an auditor can trace.</p>
+        <div class="cta">
+          <a class="btn primary" href="#research">Read the research</a>
+          <a class="btn" href="#projects">See projects</a>
+        </div>
+      </div>
+
+      <aside class="ecl" aria-label="Expected credit loss">
+        <p class="label">IFRS 9 · expected credit loss</p>
+        <p class="formula">ECL = <b>PD</b> × LGD × EAD</p>
+        <svg viewBox="0 0 300 130" role="img" aria-label="Illustrative logistic curve: probability of default falls as credit score rises">
+          <line x1="30" y1="105" x2="290" y2="105" stroke="var(--rule)" stroke-width="1"/>
+          <line x1="30" y1="10" x2="30" y2="105" stroke="var(--rule)" stroke-width="1"/>
+          <line x1="30" y1="57.5" x2="290" y2="57.5" stroke="var(--rule)" stroke-dasharray="3 4" stroke-width="1"/>
+          <path id="pdcurve" fill="none" stroke="var(--accent)" stroke-width="2.25" stroke-linecap="round"/>
+          <text x="24" y="14" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">1.0</text>
+          <text x="24" y="60" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">0.5</text>
+          <text x="24" y="108" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">0</text>
+          <text x="290" y="122" text-anchor="end" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--muted)">credit quality →</text>
+          <text x="36" y="22" font-family="IBM Plex Mono, monospace" font-size="9" fill="var(--accent)">PD</text>
+        </svg>
+        <p class="cap">Illustrative logistic link, σ(β₀ + βᵀx). My research sits on the PD term.</p>
+      </aside>
+    </div>
+  </section>
+
+  <div class="facts">
+    <div class="wrap">
+      <div class="fact"><b>618,584</b><span>36-month loans modelled</span></div>
+      <div class="fact"><b>5</b><span>model families compared</span></div>
+      <div class="fact"><b>3</b><span>rolling-origin folds</span></div>
+      <div class="fact"><b>$6.94bn</b><span>exposure valued under IFRS 9</span></div>
+    </div>
+  </div>
+
+  <!-- RESEARCH -->
+  <section class="block" id="research">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Research</p>
+        <h2>Does a better PD model make a better provision?</h2>
+        <p>My PGDip research compares logistic regression with four tree-ensemble families on 618,584 loans, then follows each model's probabilities all the way through to an IFRS 9 impairment charge.</p>
+      </div>
+
+      <article class="feature">
+        <div class="feature-top">
+          <div>
+            <span class="status done">Submitted · November 2026</span>
+            <h3>Probability of default and IFRS 9 expected credit loss: logistic regression against tree ensembles</h3>
+            <p class="sum">The study asks three questions the applied credit-risk literature tends to leave unexamined. Do the metrics used to select a PD model answer the question an impairment charge actually poses? What does a defensible look-ahead control cost on a fixed-term product? And when macroeconomic variables are supplied as loan-level features, do they act as conditioning information, or as something else in its place?</p>
+          </div>
+          <dl class="meta">
+            <div><dt>Programme</dt><dd>PGDip Data Analytics, IIE Varsity College</dd></div>
+            <div><dt>Data</dt><dd>Lending Club accepted loans, 36-month term</dd></div>
+            <div><dt>Design</dt><dd>Three rolling-origin folds, fixed seed, equal budget across families</dd></div>
+            <div><dt>Controls</dt><dd>Leakage register of 39 excluded fields, plus a univariate AUC screen</dd></div>
+          </dl>
+        </div>
+
+        <div class="pipeline">
+          <p class="label">Method</p>
+          <div class="pipe-scroll">
+            <div class="pipe">
+              <div class="stage"><span class="n">DATA</span><b>Sample and screen</b><span>36-month Lending Club loans, filtered through the leakage register</span></div>
+              <div class="stage"><span class="n">ENRICH</span><b>Macro features</b><span>Six US and six South African series from FRED, aligned by publication lag</span></div>
+              <div class="stage"><span class="n">MODEL</span><b>Five families</b><span>Logistic Regression, Random Forest, XGBoost, LightGBM, CatBoost</span></div>
+              <div class="stage"><span class="n">EVALUATE</span><b>Compare</b><span>Discrimination, calibration, paired DeLong tests with Holm correction</span></div>
+              <div class="stage"><span class="n">EXPLAIN</span><b>SHAP vs coefficients</b><span>TreeSHAP stability checked against logistic regression</span></div>
+              <div class="stage"><span class="n">PROVISION</span><b>IFRS 9 ECL</b><span>45% LGD on an annuity exposure schedule, discounted at each loan's own rate</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cols3">
+          <div>
+            <h4>The model families</h4>
+            <div class="models">
+              <div class="model"><b>LR</b><span>The interpretable baseline banks already defend to regulators.</span></div>
+              <div class="model"><b>RF</b><span>Bagging: many deep trees, averaged to cut variance.</span></div>
+              <div class="model"><b>GBM</b><span>Boosting three ways: XGBoost, LightGBM and CatBoost.</span></div>
+            </div>
+          </div>
+          <div>
+            <h4>Robustness checks</h4>
+            <ul>
+              <li>A 36-month look-ahead embargo, so no model trains on an outcome unknown at its cut-off.</li>
+              <li>A temporal placebo to test whether an apparent macro gain is only a date stamp.</li>
+              <li>A rerun without the instalment feature to test for leakage carried in a ratio.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Engineering</h4>
+            <ul>
+              <li>One config file drives every run; results are deterministic under the seed.</li>
+              <li>A vectorised ECL engine, pinned by tests to a scalar reference implementation.</li>
+              <li>Raw data never committed; macro retrieval logged with provenance.</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="results">
+          <span class="label">Results</span>
+          <span>Under assessment. The findings, code and results tables are public in the repository.</span>
+          <a href="https://github.com/SamSabela/pd-ecl-research" target="_blank" rel="noopener">View the repository ↗</a>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section class="block" id="projects">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Projects</p>
+        <h2>Work that ships into real reporting cycles.</h2>
+        <p>Applied analytics from my roles and side work. Client data stays private; the problem, the approach and the outcome are described here.</p>
+      </div>
+
+      <div class="grid">
+        <article class="case">
+          <div class="case-top"><span class="label">Workforce analytics</span><span class="status done">Delivered</span></div>
+          <h3>Predicting in-demand roles</h3>
+          <div class="row"><h4>Problem</h4><p>Resourcing teams needed an earlier signal of which roles would be hard to fill.</p></div>
+          <div class="row"><h4>What I built</h4><ul>
+            <li>Joined headcount and new-joiner datasets into a role-level history.</li>
+            <li>Engineered demand features and trained a predictive model to rank roles by expected demand.</li>
+          </ul></div>
+          <div class="row"><h4>Outcome</h4><p>A ranked view of roles likely to need sourcing, used to plan ahead rather than react.</p></div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">scikit-learn</span><span class="tag">SQL</span></div>
+        </article>
+
+        <article class="case">
+          <div class="case-top"><span class="label">Performance reporting</span><span class="status done">In production</span></div>
+          <h3>SLA and contractor performance monitoring</h3>
+          <div class="row"><h4>Problem</h4><p>Service levels and contractor delivery were tracked manually and inconsistently.</p></div>
+          <div class="row"><h4>What I built</h4><ul>
+            <li>SQL models that standardise SLA measurement across sources.</li>
+            <li>Automated Power BI reporting with governed definitions and refresh.</li>
+          </ul></div>
+          <div class="row"><h4>Outcome</h4><p>One trusted version of SLA performance, produced on schedule without manual collation.</p></div>
+          <div class="tags"><span class="tag">SQL</span><span class="tag">Power BI</span><span class="tag">DAX</span><span class="tag">Data governance</span></div>
+        </article>
+
+        <article class="case">
+          <div class="case-top"><span class="label">Financial reporting</span><span class="status done">Delivered</span></div>
+          <h3>Statutory reporting from Business Central</h3>
+          <div class="row"><h4>Problem</h4><p>South African statutory outputs had to be rebuilt by hand from the ledger each period.</p></div>
+          <div class="row"><h4>What I built</h4><ul>
+            <li>Reporting from Dynamics 365 Business Central covering statutory SA financial statements.</li>
+            <li>An interactive Excel trial balance that drills from line item to account.</li>
+          </ul></div>
+          <div class="row"><h4>Outcome</h4><p>Faster period-end with an audit trail from report back to the ledger.</p></div>
+          <div class="tags"><span class="tag">Business Central</span><span class="tag">Excel</span><span class="tag">IFRS</span></div>
+        </article>
+
+        <article class="case">
+          <div class="case-top"><span class="label">Automation</span><span class="status live">In progress</span></div>
+          <h3>Customer statement splitting and distribution</h3>
+          <div class="row"><h4>Problem</h4><p>A monthly Business Central export holds every customer's statement in one PDF, split and emailed by hand.</p></div>
+          <div class="row"><h4>What I built</h4><ul>
+            <li>A Python routine that splits the combined PDF into one statement per customer.</li>
+            <li>Matching to customer contacts, with automated sending as the next step.</li>
+          </ul></div>
+          <div class="row"><h4>Outcome</h4><p>Monthly statement runs move from manual splitting to a reviewed batch process.</p></div>
+          <div class="tags"><span class="tag">Python</span><span class="tag">PDF processing</span><span class="tag">Automation</span></div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="block" id="about">
+    <div class="wrap about">
+      <div class="prose">
+        <p>I came to data through the ledger. Accounting and audit taught me to ask where a number comes from before asking what it means.</p>
+        <p>Today I work as a reporting specialist on a tier-one banking account, building SQL and Power BI reporting for SLA measurement, contractor analytics and business performance. Alongside that I'm completing a Postgraduate Diploma in Data Analytics, where my research focuses on credit risk.</p>
+        <p>The questions that keep me up sit in credit: how lenders price risk, how a model earns a regulator's trust, and how structure turns a borrower's story into a deal. Longer term, I want to help extend financial access to the millions of South Africans who are still unbanked.</p>
+        <p>Outside the desk, I captained the University of Johannesburg track and field team to a national championship and still coach younger athletes at my old track.</p>
+      </div>
+      <div class="aside">
+        <div><h3>Credit risk</h3><div class="tags"><span class="tag">IFRS 9</span><span class="tag">Basel III/IV</span><span class="tag">PD modelling</span><span class="tag">SHAP</span></div></div>
+        <div><h3>Analytics</h3><div class="tags"><span class="tag">Python</span><span class="tag">pandas</span><span class="tag">scikit-learn</span><span class="tag">XGBoost</span><span class="tag">PySpark</span><span class="tag">SQL</span></div></div>
+        <div><h3>Reporting</h3><div class="tags"><span class="tag">Power BI</span><span class="tag">Microsoft Fabric</span><span class="tag">Excel</span><span class="tag">Business Central</span></div></div>
+        <div><h3>Foundations</h3><div class="tags"><span class="tag">Financial accounting</span><span class="tag">Auditing</span><span class="tag">Data governance</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EXPERIENCE + EDUCATION -->
+  <section class="block" id="experience">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Experience and education</p>
+        <h2>Accounting first, analytics now.</h2>
+      </div>
+      <div class="two">
+        <div>
+          <p class="col-title">Experience</p>
+          <ul class="ledger">
+            <li><span class="when">Current</span><div><b>Reporting Specialist</b><span class="org">Resourgenix · Absa account</span><p>SLA measurement, contractor analytics and business performance reporting in SQL and Power BI. Recipient of a Top Enablement Excellence Award.</p></div></li>
+            <li><span class="when">Prior</span><div><b>Finance and reporting</b><span class="org">MFCS</span><p>Financial reporting and advisory support.</p></div></li>
+            <li><span class="when">Prior</span><div><b>Accounting</b><span class="org">Accounting and Financial Advisory</span><p>Bookkeeping, statutory reporting and client accounts.</p></div></li>
+          </ul>
+        </div>
+        <div>
+          <p class="col-title">Education</p>
+          <ul class="ledger">
+            <li><span class="when">2026</span><div><b>PGDip in Data Analytics</b><span class="org">IIE Varsity College · research submitted</span><p>Research: PD modelling under IFRS 9 and Basel III.</p></div></li>
+            <li><span class="when">2024</span><div><b>Advanced Diploma in Accounting Science</b><span class="org">UNISA · Auditing specialisation</span></div></li>
+            <li><span class="when">2019</span><div><b>Diploma in Accounting</b><span class="org">University of Johannesburg</span></div></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- NOTES -->
+  <section class="block" id="notes">
+    <div class="wrap">
+      <div class="head">
+        <p class="label">Notes from the work</p>
+        <h2>What I learned building it.</h2>
+      </div>
+      <div class="notes">
+        <div class="note"><span class="label">Numerics</span><h3>Catastrophic cancellation in a PD pipeline</h3><p>A floating-point precision problem hit during PD model development, and how I traced and fixed it.</p></div>
+        <div class="note"><span class="label">Theory</span><h3>Bagging versus boosting, in bias–variance terms</h3><p>Why Random Forest and XGBoost attack different halves of the same error decomposition.</p></div>
+        <div class="note"><span class="label">Method</span><h3>Learning ML in Excel before Python</h3><p>Workbooks for OLS, kNN and logistic regression that make every step of the maths visible.</p></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<section class="contact" id="contact">
+  <div class="wrap">
+    <div>
+      <p class="label">Get in touch</p>
+      <h2>Good conversations compound.</h2>
+      <p>Most of what I know, I learned from someone willing to talk it through, and I'm always happy to return the favour. Bring a modelling problem, an idea you're testing, or a strong opinion on whether XGBoost belongs in a regulated model. Coffee in Joburg or a call, I'm in.</p>
+    </div>
+    <div class="channels">
+      <div class="channel"><span id="email">sam.sabela@gmail.com</span><button class="copy" id="copy-email" type="button">Copy</button></div>
+      <div class="channel"><span>LinkedIn</span><a href="https://www.linkedin.com/in/samkelo-sabela-b5a911229/" target="_blank" rel="noopener">View profile ↗</a></div>
+      <div class="channel"><span>GitHub</span><a href="https://github.com/SamSabela/pd-ecl-research" target="_blank" rel="noopener">View the research code ↗</a></div>
+    </div>
+  </div>
+</section>
+<footer><div class="wrap"><span>© 2026 Samkelo Sabela</span><span>Johannesburg, South Africa</span></div></footer>
+
+<script>
+(function(){
+  // draw illustrative logistic PD curve
+  var p=document.getElementById('pdcurve'), d='';
+  for(var i=0;i<=60;i++){
+    var t=i/60, x=30+t*260, z=(t-0.45)*11, pd=1/(1+Math.exp(z)), y=105-pd*95;
+    d+=(i?'L':'M')+x.toFixed(1)+' '+y.toFixed(1);
+  }
+  p.setAttribute('d',d);
+
+  var btn=document.getElementById('copy-email'), em=document.getElementById('email');
+  btn.addEventListener('click',function(){
+    var txt=em.textContent;
+    function done(){btn.textContent='Copied';setTimeout(function(){btn.textContent='Copy'},1600)}
+    function fallback(){var r=document.createRange();r.selectNodeContents(em);var s=getSelection();s.removeAllRanges();s.addRange(r);btn.textContent='Selected'}
+    try{navigator.clipboard.writeText(txt).then(done,fallback)}catch(e){fallback()}
+  });
+})();
+</script>
+</body>
+</html>
